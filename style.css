@@ -21,85 +21,61 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+#count-display {
+    font-size: 4rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    margin-top: -100px;
+    /* Offset to be above player */
+    z-index: 10;
+}
 
-    body {
-        overflow: hidden;
-        background-color: #1a1a1a;
-        font-family: 'Inter', sans-serif;
-    }
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    pointer-events: auto;
+    z-index: 20;
+}
 
-    #app {
-        width: 100vw;
-        height: 100vh;
-    }
+.hidden {
+    display: none;
+}
 
-    #ui {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
 
-    #count-display {
-        font-size: 4rem;
-        font-weight: bold;
-        color: white;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-        margin-top: -100px;
-        /* Offset to be above player */
-        z-index: 10;
-    }
+button {
+    padding: 15px 30px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
 
-    .screen {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        color: white;
-        pointer-events: auto;
-        z-index: 20;
-    }
+button:hover {
+    background: #0056b3;
+}
 
-    .hidden {
-        display: none;
-    }
-
-    h1 {
-        font-size: 3rem;
-        margin-bottom: 20px;
-    }
-
-    button {
-        padding: 15px 30px;
-        font-size: 1.5rem;
-        cursor: pointer;
-        background: #007bff;
-        color: white;
-        border: none;
-        border-radius: 5px;
-    }
-
-    button:hover {
-        background: #0056b3;
-    }
-
-    canvas {
-        display: block;
-    }
+canvas {
+    display: block;
+}
