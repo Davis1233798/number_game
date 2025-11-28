@@ -8,14 +8,18 @@ export class Gate {
         this.passed = false;
 
         // Visuals
-        const color = (operation === 'add' || operation === 'multiply') ? 0x0000ff : 0xff0000;
-        this.geometry = new THREE.BoxGeometry(3.5, 4, 0.5);
-        this.material = new THREE.MeshStandardMaterial({
+        const color = (operation === 'add' || operation === 'multiply') ? 0x0088ff : 0xff2222;
+        const geometry = new THREE.BoxGeometry(3.5, 4, 0.5);
+        const material = new THREE.MeshPhysicalMaterial({
             color: color,
             transparent: true,
-            opacity: 0.5
+            opacity: 0.6,
+            metalness: 0.1,
+            roughness: 0.1,
+            transmission: 0.5, // Glass-like
+            thickness: 1
         });
-        this.mesh = new THREE.Mesh(this.geometry, this.material);
+        this.mesh = new THREE.Mesh(geometry, material);
         this.mesh.position.set(x, 2, z);
         this.scene.add(this.mesh);
 

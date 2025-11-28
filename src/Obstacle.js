@@ -6,8 +6,12 @@ export class Obstacle {
         this.passed = false;
 
         // Visuals
-        this.geometry = new THREE.ConeGeometry(1, 2, 32);
-        this.material = new THREE.MeshStandardMaterial({ color: 0xff0000 });
+        this.geometry = new THREE.ConeGeometry(0.5, 1, 16);
+        this.material = new THREE.MeshStandardMaterial({
+            color: 0xff0000,
+            emissive: 0x550000,
+            roughness: 0.4
+        });
         this.mesh = new THREE.Mesh(this.geometry, this.material);
         this.mesh.position.set(x, 1, z);
         this.scene.add(this.mesh);

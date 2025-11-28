@@ -7,8 +7,8 @@ export class SceneSetup {
         this.height = window.innerHeight;
 
         this.scene = new THREE.Scene();
-        this.scene.background = new THREE.Color(0x87CEEB); // Sky blue background
-        this.scene.fog = new THREE.Fog(0x87CEEB, 10, 50);
+        this.scene.background = new THREE.Color(0x202025); // Dark premium background
+        this.scene.fog = new THREE.FogExp2(0x202025, 0.02); // Soft fog
 
         this.camera = new THREE.PerspectiveCamera(75, this.width / this.height, 0.1, 1000);
         this.camera.position.set(0, 5, 10);
@@ -17,6 +17,7 @@ export class SceneSetup {
         this.renderer = new THREE.WebGLRenderer({ antialias: true });
         this.renderer.setSize(this.width, this.height);
         this.renderer.shadowMap.enabled = true;
+        this.renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Softer shadows
         this.container.appendChild(this.renderer.domElement);
 
         this.setupLights();
@@ -26,12 +27,15 @@ export class SceneSetup {
     }
 
     setupLights() {
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-        this.scene.add(ambientLight);
+        const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.6);
+        hemiLight.position.set(0, 20, 0);
+        this.scene.add(hemiLight);
 
         const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
         dirLight.position.set(10, 20, 10);
         dirLight.castShadow = true;
+        dirLight.shadow.mapSize.width = 2048;
+        dirLight.shadow.mapSize.height = 2048;
         dirLight.shadow.camera.top = 20;
         dirLight.shadow.camera.bottom = -20;
         dirLight.shadow.camera.left = -20;
@@ -40,16 +44,14 @@ export class SceneSetup {
     }
 
     setupGround() {
-        const geometry = new THREE.PlaneGeometry(100, 1000);
-        const material = new THREE.MeshStandardMaterial({ color: 0x999999 });
+        // Bridge
+        const geometry = new THREE.BoxGeometry(14, 1, 1000);
+        const material = new THREE.MeshStandardMaterial({ color: 0x555555 });
         this.ground = new THREE.Mesh(geometry, material);
-        this.ground.rotation.x = -Math.PI / 2;
+        this.ground.position.y = -0.5; // Top surface at y=0
+        this.ground.position.z = -450; // Extend forward
         this.ground.receiveShadow = true;
         this.scene.add(this.ground);
-
-        // Grid helper for visual reference
-        const gridHelper = new THREE.GridHelper(100, 100);
-        this.scene.add(gridHelper);
     }
 
     onWindowResize() {

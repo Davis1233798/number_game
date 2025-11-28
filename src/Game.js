@@ -18,7 +18,13 @@ export class Game {
         this.startScreen = document.getElementById('start-screen');
         this.gameOverScreen = document.getElementById('game-over-screen');
 
-        document.getElementById('start-btn').addEventListener('click', () => this.startGame());
+        const startBtn = document.getElementById('start-btn');
+        if (startBtn) {
+            startBtn.addEventListener('click', () => {
+                this.startGame();
+            });
+        }
+
         document.getElementById('restart-btn').addEventListener('click', () => this.restartGame());
     }
 
@@ -41,20 +47,23 @@ export class Game {
     animate() {
         requestAnimationFrame(this.animate.bind(this));
 
-        if (!this.isRunning) return;
-
         const dt = this.clock.getDelta();
-        this.player.update(dt);
-        this.levelManager.update();
 
-        // Check Game Over
-        if (this.player.count <= 0) {
-            this.gameOver();
+        if (this.isRunning) {
+            this.player.update(dt);
+            this.levelManager.update();
+
+            // Check Game Over
+            if (this.player.count <= 0) {
+                this.gameOver();
+            }
+        } else {
+            // Idle animation or camera rotation could go here
         }
 
-        // Camera follow
+        // Camera follow (always follow player even if not running, or just stay put)
         this.sceneSetup.camera.position.z = this.player.mesh.position.z + 10;
-        this.sceneSetup.camera.position.x = this.player.mesh.position.x * 0.3; // Slight follow on X
+        this.sceneSetup.camera.position.x = this.player.mesh.position.x * 0.3;
         this.sceneSetup.camera.lookAt(this.player.mesh.position);
 
         this.sceneSetup.render();
